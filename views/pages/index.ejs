@@ -91,7 +91,8 @@
                       Bearer token for search must have /activities/update permission? Get one buy doing the client authorization <a href="https://simpleorcidauthnode-rcpetersorcid.rhcloud.com/" target="auth_app">code flow</a>.<br/>
                       <a href="https://simpleorcidauthnode-rcpetersorcid.rhcloud.com/" target="auth_app">code flow</a>.<br/>
                       <br />
-                      <label>ORCID:</label> <input name="orcid" value="<%= orcid %>" onkeyup="updateOrcidDis($(this).val())"/><br />
+                      <label>ORCID:</label> <input name="orcid" value="<%= orcid %>" onkeyup="updateOrcidDis()"
+                      onchange="updateOrcidDis()" /><br />
                       All activities API calls must include an ORCID in the path
 
                       <table class="table">
@@ -126,7 +127,7 @@
                       </table>
 
                       <h3>Required for activity READ, UPDATE and DELETE</h3>
-                      <label>putCode</label>: <input name="putCode" value="<%= putCode %>" onkeyup="updatePutCodeDis($(this).val())"/><br />
+                      <label>putCode</label>: <input name="putCode" value="<%= putCode %>" onkeyup="updatePutCodeDis()" onchange="updatePutCodeDis()"/><br />
                       <strong>What is a putCode?</strong> A Put Code is a numeric identifier used to uniquely identify an activity. For this example you can get a work putCode by running the Read Activities Summary above. The work-summary element will have an attribute called putCode. 
                       <table class="table">
                         <caption>Sample Work Activities Paths</caption>
@@ -296,21 +297,21 @@
        $('textarea[name=reqBody]').val(val);
       }
 
-      function updateOrcidDis(val) {
+      function updateOrcidDis() {
          $('.orcid-dis').each(function() {
-           $(this).html(val);
+           $(this).html($('input[name=orcid').val());
           });
       };
 
-      function updateOrcidDis(val) {
+      function updatePutCodeDis() {
+        $('.put-code-dis').each(function() {
+          $(this).html($('input[name=putCode').val());
+        });
+      };
+
+      function updateResDis(val) {
          $("div[id='response-dis']").hide()
          $("div[id='outofsync-dis']").show();
-      };
-
-      function updatePutCodeDis(val) {
-         $('.put-code-dis').each(function() {
-           $(this).html(val);
-          });
       };
 
       function populateAccordState(val) {
@@ -319,7 +320,7 @@
       };
 
       function sampleSearch(sample){
-        updateOrcidDis();
+        updateResDis();
         populatePath(sample);
         populateHttpMethod('get');
         populateReqBody('');
@@ -327,7 +328,7 @@
       };
 
       function sampleReadActivities(){
-        updateOrcidDis();
+        updateResDis();
         populatePath('/v2.0_rc1/' + $('input[name=orcid]').val() + '/activities');
         populateHttpMethod('get');
         populateReqBody('');
@@ -335,7 +336,7 @@
       };
 
       function sampleAddWork(){
-        updateOrcidDis();
+        updateResDis();
         populatePath('/v2.0_rc1/' + $('input[name=orcid]').val() + '/work');
         populateHttpMethod('post');
         var template = $('#add_work').html()
@@ -344,7 +345,7 @@
       };
 
       function sampleReadWork(){
-        updateOrcidDis();
+        updateResDis();
         populatePath('/v2.0_rc1/' + $('input[name=orcid]').val() + '/work' + '/' + $('input[name=putCode]').val());
         populateHttpMethod('get');
         populateReqBody('');
@@ -366,6 +367,12 @@
         populateReqBody('');
         populateAuthorization($('input[name=updateActivitiesToken]').val());        
       }
+
+      $(function() {
+        updatePutCodeDis();
+        updateOrcidDis();
+        console.log( "ready!" );
+      }); 
 
     </script>
   </body>
