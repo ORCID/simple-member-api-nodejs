@@ -1,0 +1,340 @@
+<html ng-app="activitesApiApp">
+  <head>
+    <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <title>Simple Member API Search NodeJs</title>
+    <link rel="stylesheet" href="/bootstrap/3.3.4/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/bootstrap/3.3.4/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="css/style.css">    
+  </head>
+  <body>
+    <form action="/#REQUEST" method="post">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <h1>Simple Member API NodeJs Example</h1>          
+          </div>    
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="panel-group" id="searchActivites">
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#searchActivites" href="#collapseOne">Search</a>
+                  </h4>
+                </div>
+                <div id="collapseOne" class="panel-collapse collapse">
+                  <div class="panel-body">
+                    <p>
+                      Additional documentation at <a href="http://members.orcid.org/api/tutorial-searching-api-12-and-earlier" target="_blank">http://members.orcid.org/api/tutorial-searching-api-12-and-earlier</a> <br />
+                      <h3>Requires</h3>
+                      <label>Bearer Token:</label> <input name="readPublicToken" value="<%=readPublicToken%>" /><br />
+                      Bearer token for search must have /read-public permission? Get one buy doing the client credentials<a href="https://simpleorcidauthnode-rcpetersorcid.rhcloud.com/" target="auth_app"> flow</a>.<br />
+                    </p>
+                    <p>
+                      <table class="table">
+                        <caption>Sample Search Paths</caption>
+                        <thead>
+                          <tr>
+                            <th>Description</th>
+                            <th>HTTP METHOD</th>
+                            <th>PATH</th>
+                            <th>generate sample</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <th scope="row">Search family name</th>
+                            <td>GET</td>
+                            <td>/v1.2/search/orcid-bio/?q=family-name:Sanchez&start=4&rows=6</td>
+                            <td><a href="#REQUEST" onclick="sampleSearch('/v1.2/search/orcid-bio/?q=family-name:Sanchez&start=4&rows=6');">Generate</a></td>
+                          </tr>
+                          <tr>
+                            <th scope="row">Search all fields for text</th>
+                            <td>GET</td>
+                            <td>/v1.2/search/orcid-bio/?q=test&start=4&rows=6</td>
+                            <td><a href="#REQUEST" onclick="sampleSearch('/v1.2/search/orcid-bio/?q=test&start=4&rows=6')">Generate</a></td>
+                          </tr>
+                          <tr>
+                            <th scope="row">Search family name and text</th>
+                            <td>GET</td>
+                            <td>/v1.2/search/orcid-bio/?q=family-name:Sanchez+and+test&start=4&rows=6</td>
+                            <td><a href="#REQUEST" onclick="sampleSearch('/v1.2/search/orcid-bio/?q=family-name:Sanchez+and+test&start=4&rows=6')">Generate</a></td>
+                          </tr>
+                          <tr>
+                            <th scope="row">Search for DIO </th>
+                            <td>GET</td>
+                            <td>/v1.2/search/orcid-bio/?q=digital-object-ids:%2210.1087/20120404%22</td>
+                            <td><a href="#REQUEST" onclick="sampleSearch('/v1.2/search/orcid-bio/?q=digital-object-ids:%2210.1087/20120404%22')">Generate</a></td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#searchActivites" href="#collapseTwo">Activities API</a>
+                  </h4>
+                </div>
+                <div id="collapseTwo" class="panel-collapse collapse in">
+                  <div class="panel-body">
+                    <p>
+                      Additional documentation at: <a href="https://github.com/ORCID/ORCID-Source/blob/master/orcid-model/src/main/resources/record_2.0_rc1/README.MD">https://github.com/ORCID/ORCID-Source/blob/master/orcid-model/src/main/resources/record_2.0_rc1/README.MD</a><br />
+                      <h3>Required</h3>
+                      <label>Bearer Token:</label> <input name="updateActivitiesToken" value="<%=updateActivitiesToken%>" /><br />
+                      Bearer token for search must have /activities/update permission? Get one buy doing the client authorization <a href="https://simpleorcidauthnode-rcpetersorcid.rhcloud.com/" target="auth_app">code flow</a>.<br/>
+                      <a href="https://simpleorcidauthnode-rcpetersorcid.rhcloud.com/" target="auth_app">code flow</a>.<br/>
+                      <br />
+                      <label>ORCID: <input name="orcid" value="<%= orcid %>" /></label><br />
+                      All activities API calls must include an ORCID in the path
+
+                      <table class="table">
+                        <caption>Sample Work Activities Paths</caption>
+                        <thead>
+                          <tr>
+                            <th>Description</th>
+                            <th>HTTP METHOD</th>
+                            <th>PATH</th>
+                            <th>BODY</th>
+                            <th>generate sample</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <th scope="row">Read Activities Summary</th>
+                            <td>GET</td>
+                            <td>/v2.0_rc1/[ORCID]/activities</td>
+                            <td></td>
+                            <td><a href="#REQUEST" onclick="sampleReadActivities()">Generate</a></td>
+                          </tr>
+                        </tbody>
+                        <tbody>
+                          <tr>
+                            <th scope="row">Add a Work</th>
+                            <td>POST</td>
+                            <td>/v2.0_rc1/[ORCID]/work</td>
+                            <td>New work, with unique identifier per the source.</td>
+                            <td><a href="#REQUEST" onclick="sampleAddWork()">Generate</a></td>
+                          </tr>
+                        </tbody>
+                      </table>
+
+                      <h3>Required for activity READ, UPDATE and DELETE</h3>
+                      <label>Put Code</label>: <input name="putCode" value="<%= putCode %>" />
+                      <table class="table">
+                        <caption>Sample Work Activities Paths</caption>
+                        <thead>
+                          <tr>
+                            <th>Description</th>
+                            <th>HTTP METHOD</th>
+                            <th>PATH</th>
+                            <th>BODY</th>
+                            <th>generate sample</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <th scope="row">Read Work</th>
+                            <td>GET</td>
+                            <td>/v2.0_rc1/[ORCID]/work/[PUT_CODE]</td>
+                            <td></td>
+                            <td><a href="#REQUEST" onclick="sampleReadWork()">Generate</a></td>
+                          </tr>
+                        </tbody>
+                        <tbody>
+                          <tr>
+                            <th scope="row">Update Work</th>
+                            <td>PUT</td>
+                            <td>/v2.0_rc1/[ORCID]/work/[PUT-CODE]</td>
+                            <td></td>
+                            <td>
+                               <% if (results.indexOf('work put-code=') > -1) { %>
+                                 <a href="#REQUEST" onclick="sampleUpdateWork()">Generate by copying last response.</a>
+                               <% } else { %>
+                                  Please READ a work first.
+                               <% } %>
+                            </td>
+                          </tr>
+                        </tbody>
+                        <tbody>
+                          <tr>
+                            <th scope="row">Delete Work</th>
+                            <td>DELETE</td>
+                            <td>/v2.0_rc1/[ORCID]/work/[PUT-CODE]</td>
+                            <td></td>
+                            <td><a href="#REQUEST" onclick="sampleDelete()">Generate</a></td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </p>
+                  </div>
+                </div>
+              </div>          
+            </div>
+          </div>    
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <a name="REQUEST" />
+            <h2>REQUEST</h2> 
+            <div class="panel panel-primary">             
+              <div class="panel-body">
+                
+                <input type="submit" value="Submit" class="btn btn-primary pull-right">
+                <h3>HOST</h3>
+                <blockquote>
+                  <span class="label label-primary">api.sandbox.orcid.org</span>
+                </blockquote>   
+                <h3>REQUEST PATH</h3>
+                <blockquote>
+                  <div class="control-group">
+                    <label>Path:</label>
+                    <input type="text" class="form-control" name="path" value="<%= path %>" size='100'></input>
+                  </div>
+                </blockquote>
+                <h3>HTTP METHOD</h3>
+                <blockquote>
+                  <label><input class="form-control" type="text" name="httpMethod" value="<%= httpMethod %>"></input></label>
+                </blockquote>   
+                <h3>HTTP HEADERS</h3>
+                <blockquote>
+                  <div class="control-group">
+                     <label>Accept:</label> 
+                     <input class="form-control" type="text" name="accept" value="<%= accept %>"></input>
+                     <label class="margin-top">Authorization:</label>
+                     <input class="form-control" type="text" name="authorization" value="<%= authorization %>"></input>
+                     <label class="margin-top">Content-type:</label>
+                     <input class="form-control" type="text" name="contentType" value="<%= contentType %>"></input>
+                     <h3>HTTP REQUEST BODY:</h3>              
+                     <textarea class="form-control" name="reqBody"><%= reqBody %></textarea>
+                  </div>
+                  <div class="margin-top">
+                    <p>Don't have a sandbox bearer token with /read-public permission?</p>
+                    <p>Get one buy doing the client authorization code <a href="https://simpleorcidauthnode-rcpetersorcid.rhcloud.com/" target="auth_app">here</a>.</p>  
+                  </div>
+                </blockquote>                  
+                <input type="submit" value="Submit" class="btn btn-primary pull-right">
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <h2>RESPONSE</h2>  
+            <div class="panel panel-primary">
+              <div class="panel-body">
+                <h3>HTTP STATUS CODE:</h3>
+                <blockquote class="status-code">
+                  <%=statusCode%>
+                </blockquote>
+                <h3>HTTP HEADERS:</h3>
+                <div class="control-group">
+                  <% for(var k in res.headers) { %>
+                    <label><%=k%></label><br />
+                    <%=res.headers[k]%><br />
+                  <% } %>
+                </div>
+                <h3>HTTP RESPONSE BODY:</h3>              
+                <textarea class="form-control" name="resBody"><%= results %></textarea>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div>            
+              <p><strong>You can view the code at github: <a href="https://github.com/ORCID/simple-member-api-search-nodejs" target="_blank">https://github.com/ORCID/simple-member-api-search-nodejs</a></strong></p>
+            </div>    
+          </div>
+        </div>
+      </div>
+    </form>
+
+    <script id="add_work" type="x-tmpl-mustache">
+   <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+    <work:work visibility="public" xmlns:history="http://www.orcid.org/ns/history" xmlns:work="http://www.orcid.org/ns/work" xmlns:deprecated="http://www.orcid.org/ns/deprecated" xmlns:record="http://www.orcid.org/ns/record" xmlns:person="http://www.orcid.org/ns/person" xmlns:funding="http://www.orcid.org/ns/funding" xmlns:employment="http://www.orcid.org/ns/employment" xmlns:common="http://www.orcid.org/ns/common" xmlns:peer-review="http://www.orcid.org/ns/peer-review" xmlns:activities="http://www.orcid.org/ns/activities" xmlns:education="http://www.orcid.org/ns/education" xmlns:internal="http://www.orcid.org/ns/internal" xmlns:preferences="http://www.orcid.org/ns/preferences">
+        <work:title>
+            <common:title>Add work tutorial 2</common:title>
+        </work:title>
+        <work:type>lecture-speech</work:type>
+        <work:external-identifiers>
+            <work:work-external-identifier>
+                <work:external-identifier-type>other-id</work:external-identifier-type>
+                <work:external-identifier-id>TIMESTAMPE201511</work:external-identifier-id>
+            </work:work-external-identifier>
+        </work:external-identifiers>
+        <work:contributors/>
+    </work:work>
+
+     </script>
+
+
+    <script src="mustache/v2.1.1/mustache.min.js"></script>
+    <script src="/jquery/1.11.2/jquery.min.js"></script>
+    <script src="/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <script>
+      function populatePath(val) {
+        $('input[name=path]').val(val);
+      }
+
+      function populateHttpMethod(val) {
+        $('input[name=httpMethod]').val(val);
+      }
+
+      function populateAuthorization(val) {
+        $('input[name=authorization]').val('Bearer ' + val);
+      }
+
+      function populateReqBody(val) {
+       $('textarea[name=reqBody]').val(val);
+       }
+
+      function sampleSearch(sample){
+        populatePath(sample);
+        populateHttpMethod('get');
+        populateReqBody('');
+        populateAuthorization($('input[name=readPublicToken]').val());
+       };
+
+      function sampleReadActivities(){
+        populatePath('/v2.0_rc1/' + $('input[name=orcid]').val() + '/activities');
+        populateHttpMethod('get');
+        populateReqBody('');
+        populateAuthorization($('input[name=updateActivitiesToken]').val());
+       };
+
+      function sampleAddWork(){
+        populatePath('/v2.0_rc1/' + $('input[name=orcid]').val() + '/work');
+        populateHttpMethod('post');
+        var template = $('#add_work').html()
+        populateReqBody(Mustache.render(template, {}));
+        populateAuthorization($('input[name=updateActivitiesToken]').val());
+       };
+
+      function sampleReadWork(){
+        populatePath('/v2.0_rc1/' + $('input[name=orcid]').val() + '/work' + '/' + $('input[name=putCode]').val());
+        populateHttpMethod('get');
+        populateReqBody('');
+        populateAuthorization($('input[name=updateActivitiesToken]').val());        
+      }
+
+      function sampleUpdateWork(){
+        populatePath('/v2.0_rc1/' + $('input[name=orcid]').val() + '/work' + '/' + $('input[name=putCode]').val());
+        populateHttpMethod('put');
+        populateReqBody($('textarea[name=resBody]').val());
+        populateAuthorization($('input[name=updateActivitiesToken]').val());        
+      }
+
+      function sampleDelete(){
+        populatePath('/v2.0_rc1/' + $('input[name=orcid]').val() + '/work' + '/' + $('input[name=putCode]').val());
+        populateHttpMethod('delete');
+        populateReqBody('');
+        populateAuthorization($('input[name=updateActivitiesToken]').val());        
+      }
+
+    </script>
+  </body>
+</html>

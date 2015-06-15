@@ -1,0 +1,52 @@
+h1{
+    color: #a6ce39;
+    text-align: center;
+}
+
+h2{
+    color: #338caf;
+}
+
+
+h3{
+    color: #494A4C;
+}
+
+p{
+    font-size: 14px;
+}
+
+textarea{
+    font-family: Verdana;
+    font-size: 12px;
+    min-height: 600px;
+    height: auto;
+}
+
+.btn-primary,
+.label-primary{
+    background: #338caf;
+    border: none;
+}
+
+.btn-primary:hover{
+    background: #a6ce39;
+}
+
+.panel-primary{
+    border-color: #a6ce39;
+}
+
+.margin-top{
+    margin-top: 15px;
+}
+
+.status-code{
+    color: #338caf;
+    font-size: 25px;
+}
+
+.min-800px{
+    min-height: 800px;
+    height: auto; 
+}

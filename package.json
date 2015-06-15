@@ -1,0 +1,33 @@
+{
+  "name": "simple-orcid-activity-nodej",
+  "version": "0.0.1",
+  "description": "Simple example of using ORCID OAuth2 activity api",
+  "main": "gulpfile.js",
+  "dependencies": {
+    "body-parser": "^1.12.4 ",
+    "ejs": "^1.0.0",
+    "express": "^4.12.4",
+    "request": "^2.57.0",
+    "global-request-logger": "^0.0.1",
+    "querystring": "^0.2.0",
+    "striptags": "^2.0.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:ORCID/simple-orcid-search-node.git"
+  },
+  "engines": {
+    "node": ">= 0.10.0",
+    "npm": ">= 2.0.0"
+  },
+  "keywords": [
+    "orcid node"
+  ],
+  "author": "rcpeters",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ORCID/simple-orcid-search-node/issues"
+  },
+  "homepage": "https://github.com/ORCID/simple-orcid-search-node/issues",
+  "main": "client-app.js"
+}
