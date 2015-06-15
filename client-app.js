@@ -16,21 +16,23 @@ app.listen(config.PORT, config.SERVER_IP, function () { // Start express
 app.all('/', function(req, res) { 
   // Read body params
   var accept = req.body.accept ? striptags(req.body.accept): 'application/vnd.orcid+xml';
+  var accordState = req.body.accordState ? striptags(req.body.accordState): '';
   var httpMethod = req.body.httpMethod ? striptags(req.body.httpMethod): 'get';
   var authorization = req.body.authorization ? striptags(req.body.authorization): 'bearer [token]';
   var reqBody = req.body.reqBody ? req.body.reqBody: '';
   var path = req.body.path ? striptags(req.body.path): '';
   var resBody = req.body.resBody ? req.body.resBody: '';
-  var orcid = req.body.orcid ? striptags(req.body.orcid): '';
-  var putCode = req.body.putCode ? striptags(req.body.putCode): '';
+  var orcid = req.body.orcid ? striptags(req.body.orcid): '[ORCID]';
+  var putCode = req.body.putCode ? striptags(req.body.putCode): '[PUT_CODE]';
   var contentType = req.body.contentType ? striptags(req.body.contentType): 'application/vnd.orcid+xml'; 
-  var readPublicToken = req.body.readPublicToken? striptags(req.body.readPublicToken): '';
-  var updateActivitiesToken = req.body.updateActivitiesToken? striptags(req.body.updateActivitiesToken): '';
+  var readPublicToken = req.body.readPublicToken? striptags(req.body.readPublicToken): '[READ_PUBLIC_TOKEN]';
+  var updateActivitiesToken = req.body.updateActivitiesToken? striptags(req.body.updateActivitiesToken): '[ACTIVITIES_TOKEN]';
 
   var apiResCallback = function(error, response, body) {
       // returns index page
       res.render('pages/index', {
         'accept': accept,
+        'accordState': accordState,
         'httpMethod': httpMethod,
         'authorization': authorization,
         'orcid': orcid,

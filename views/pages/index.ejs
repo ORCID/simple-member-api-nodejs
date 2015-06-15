@@ -1,4 +1,4 @@
-<html ng-app="activitesApiApp">
+<html>
   <head>
     <meta charset="utf-8">
       <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -10,6 +10,7 @@
   </head>
   <body>
     <form action="/#REQUEST" method="post">
+      <input type="hidden" name="accordState" value="" />
       <div class="container">
         <div class="row">
           <div class="col-md-12">
@@ -22,10 +23,10 @@
               <div class="panel panel-default">
                 <div class="panel-heading">
                   <h4 class="panel-title">
-                    <a data-toggle="collapse" data-parent="#searchActivites" href="#collapseOne">Search</a>
+                    <a data-toggle="collapse" data-parent="#searchActivites" href="#collapseOne" onclick="populateAccordState('collapseOne')">Search</a>
                   </h4>
                 </div>
-                <div id="collapseOne" class="panel-collapse collapse">
+                <div id="collapseOne" class="panel-collapse collapse <%= accordState.indexOf('collapseOne') > -1 ? 'in': '' %>">
                   <div class="panel-body">
                     <p>
                       Additional documentation at <a href="http://members.orcid.org/api/tutorial-searching-api-12-and-earlier" target="_blank">http://members.orcid.org/api/tutorial-searching-api-12-and-earlier</a> <br />
@@ -78,10 +79,10 @@
               <div class="panel panel-default">
                 <div class="panel-heading">
                   <h4 class="panel-title">
-                    <a data-toggle="collapse" data-parent="#searchActivites" href="#collapseTwo">Activities API</a>
+                    <a data-toggle="collapse" data-parent="#searchActivites" href="#collapseTwo" onclick="populateAccordState('collapseTwo')">Activities API</a>
                   </h4>
                 </div>
-                <div id="collapseTwo" class="panel-collapse collapse in">
+                <div id="collapseTwo" class="panel-collapse collapse <%= accordState.indexOf('collapseTwo') > -1 ? 'in': '' %>" >
                   <div class="panel-body">
                     <p>
                       Additional documentation at: <a href="https://github.com/ORCID/ORCID-Source/blob/master/orcid-model/src/main/resources/record_2.0_rc1/README.MD">https://github.com/ORCID/ORCID-Source/blob/master/orcid-model/src/main/resources/record_2.0_rc1/README.MD</a><br />
@@ -90,7 +91,7 @@
                       Bearer token for search must have /activities/update permission? Get one buy doing the client authorization <a href="https://simpleorcidauthnode-rcpetersorcid.rhcloud.com/" target="auth_app">code flow</a>.<br/>
                       <a href="https://simpleorcidauthnode-rcpetersorcid.rhcloud.com/" target="auth_app">code flow</a>.<br/>
                       <br />
-                      <label>ORCID: <input name="orcid" value="<%= orcid %>" onkeyup="updateOrcidDis($(this).val())"/></label><br />
+                      <label>ORCID:</label> <input name="orcid" value="<%= orcid %>" onkeyup="updateOrcidDis($(this).val())"/><br />
                       All activities API calls must include an ORCID in the path
 
                       <table class="table">
@@ -151,7 +152,7 @@
                             <th scope="row">Update Work</th>
                             <td>PUT</td>
                             <td>/v2.0_rc1/<span class="orcid-dis">[ORCID]</span>/work/<span class="put-code-dis">PUT_CODE</span></td>
-                            <td></td>
+                            <td>Existing work</td>
                             <td>
                                <% if (results.indexOf('work put-code=') > -1) { %>
                                  <a href="#REQUEST" onclick="sampleUpdateWork()">Generate by copying last response.</a>
@@ -184,8 +185,7 @@
             <h2>REQUEST</h2> 
             <div class="panel panel-primary">             
               <div class="panel-body">
-                
-                <input type="submit" value="Submit" class="btn btn-primary pull-right">
+                <input type="submit" value="Submit" class="btn btn-primary pull-right"></input>
                 <h3>HOST</h3>
                 <blockquote>
                   <span class="label label-primary">api.sandbox.orcid.org</span>
@@ -225,7 +225,7 @@
           <div class="col-md-6">
             <h2>RESPONSE</h2>  
             <div class="panel panel-primary">
-              <div class="panel-body">
+              <div id="response-dis" class="panel-body">
                 <h3>HTTP STATUS CODE:</h3>
                 <blockquote class="status-code">
                   <%=statusCode%>
@@ -276,6 +276,7 @@
     <script src="/jquery/1.11.2/jquery.min.js"></script>
     <script src="/bootstrap/3.3.4/js/bootstrap.min.js"></script>
     <script>
+
       function populatePath(val) {
         $('input[name=path]').val(val);
       }
@@ -298,13 +299,23 @@
           });
       };
 
+      function updateOrcidDis(val) {
+         $("div[id='response-dis']").html("Out of sync, submit request to see response.");
+      };
+
       function updatePutCodeDis(val) {
          $('.put-code-dis').each(function() {
            $(this).html(val);
           });
       };
 
+      function populateAccordState(val) {
+        if (!$('div[name=' + val +']').hasClass('in')) ;
+          $('input[name=accordState]').val(val);
+      };
+
       function sampleSearch(sample){
+        updateOrcidDis();
         populatePath(sample);
         populateHttpMethod('get');
         populateReqBody('');
@@ -312,6 +323,7 @@
       };
 
       function sampleReadActivities(){
+        updateOrcidDis();
         populatePath('/v2.0_rc1/' + $('input[name=orcid]').val() + '/activities');
         populateHttpMethod('get');
         populateReqBody('');
@@ -319,6 +331,7 @@
       };
 
       function sampleAddWork(){
+        updateOrcidDis();
         populatePath('/v2.0_rc1/' + $('input[name=orcid]').val() + '/work');
         populateHttpMethod('post');
         var template = $('#add_work').html()
@@ -327,6 +340,7 @@
       };
 
       function sampleReadWork(){
+        updateOrcidDis();
         populatePath('/v2.0_rc1/' + $('input[name=orcid]').val() + '/work' + '/' + $('input[name=putCode]').val());
         populateHttpMethod('get');
         populateReqBody('');
@@ -334,6 +348,7 @@
       }
 
       function sampleUpdateWork(){
+        updateOrcidDis();
         populatePath('/v2.0_rc1/' + $('input[name=orcid]').val() + '/work' + '/' + $('input[name=putCode]').val());
         populateHttpMethod('put');
         populateReqBody($('textarea[name=resBody]').val());
@@ -341,6 +356,7 @@
       }
 
       function sampleDelete(){
+        updateOrcidDis();
         populatePath('/v2.0_rc1/' + $('input[name=orcid]').val() + '/work' + '/' + $('input[name=putCode]').val());
         populateHttpMethod('delete');
         populateReqBody('');
