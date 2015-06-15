@@ -241,6 +241,9 @@
                 <h3>HTTP RESPONSE BODY:</h3>              
                 <textarea class="form-control" name="resBody"><%= results %></textarea>
               </div>
+              <div id="outofsync-dis" class="panel-body" style="display: none">
+                Out of sync, submit request to see response.
+              </div>
             </div>
           </div>
         </div>
@@ -300,7 +303,8 @@
       };
 
       function updateOrcidDis(val) {
-         $("div[id='response-dis']").html("Out of sync, submit request to see response.");
+         $("div[id='response-dis']").hide()
+         $("div[id='outofsync-dis']").show();
       };
 
       function updatePutCodeDis(val) {
