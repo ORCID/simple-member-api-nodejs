@@ -254,16 +254,15 @@
     </form>
 
     <script id="add_work" type="x-tmpl-mustache">
-   <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
     <work:work visibility="public" xmlns:history="http://www.orcid.org/ns/history" xmlns:work="http://www.orcid.org/ns/work" xmlns:deprecated="http://www.orcid.org/ns/deprecated" xmlns:record="http://www.orcid.org/ns/record" xmlns:person="http://www.orcid.org/ns/person" xmlns:funding="http://www.orcid.org/ns/funding" xmlns:employment="http://www.orcid.org/ns/employment" xmlns:common="http://www.orcid.org/ns/common" xmlns:peer-review="http://www.orcid.org/ns/peer-review" xmlns:activities="http://www.orcid.org/ns/activities" xmlns:education="http://www.orcid.org/ns/education" xmlns:internal="http://www.orcid.org/ns/internal" xmlns:preferences="http://www.orcid.org/ns/preferences">
         <work:title>
-            <common:title>Add work tutorial 2</common:title>
+            <common:title>{{ID_BY_timestamp}} - Add work tutorial</common:title>
         </work:title>
         <work:type>lecture-speech</work:type>
         <work:external-identifiers>
             <work:work-external-identifier>
                 <work:external-identifier-type>other-id</work:external-identifier-type>
-                <work:external-identifier-id>TIMESTAMPE201511</work:external-identifier-id>
+                <work:external-identifier-id>{{ID_BY_timestamp}}</work:external-identifier-id>
             </work:work-external-identifier>
         </work:external-identifiers>
         <work:contributors/>
@@ -335,7 +334,7 @@
         populatePath('/v2.0_rc1/' + $('input[name=orcid]').val() + '/work');
         populateHttpMethod('post');
         var template = $('#add_work').html()
-        populateReqBody(Mustache.render(template, {}));
+        populateReqBody(Mustache.render(template, {'ID_BY_timestamp': new Date().getTime()}));
         populateAuthorization($('input[name=updateActivitiesToken]').val());
       };
 
