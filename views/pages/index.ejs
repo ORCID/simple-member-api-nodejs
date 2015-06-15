@@ -85,7 +85,7 @@
                 <div id="collapseTwo" class="panel-collapse collapse <%= accordState.indexOf('collapseTwo') > -1 ? 'in': '' %>" >
                   <div class="panel-body">
                     <p>
-                      Additional documentation at: <a href="https://github.com/ORCID/ORCID-Source/blob/master/orcid-model/src/main/resources/record_2.0_rc1/README.MD">https://github.com/ORCID/ORCID-Source/blob/master/orcid-model/src/main/resources/record_2.0_rc1/README.MD</a><br />
+                      Additional documentation at: <a href="https://github.com/ORCID/ORCID-Source/blob/master/orcid-model/src/main/resources/record_2.0_rc1/README.MD" target="_blank">https://github.com/ORCID/ORCID-Source/blob/master/orcid-model/src/main/resources/record_2.0_rc1/README.MD</a><br />
                       <h3>Required</h3>
                       <label>Bearer Token:</label> <input name="updateActivitiesToken" value="<%=updateActivitiesToken%>" /><br />
                       Bearer token for search must have /activities/update permission? Get one buy doing the client authorization <a href="https://simpleorcidauthnode-rcpetersorcid.rhcloud.com/" target="auth_app">code flow</a>.<br/>
@@ -103,7 +103,8 @@
                             <th>HTTP METHOD</th>
                             <th>PATH</th>
                             <th>BODY</th>
-                            <th>generate sample</th>
+                            <th>Generate Sample</th>
+                            <th>Notes</th>
                           </tr>
                         </thead>
                         <tbody>
@@ -113,6 +114,7 @@
                             <td>/v2.0_rc1/<span class="orcid-dis">[ORCID]</span>/activities</td>
                             <td></td>
                             <td><a href="#REQUEST" onclick="sampleReadActivities()">Generate</a></td>
+                            <td></td>
                           </tr>
                         </tbody>
                         <tbody>
@@ -122,6 +124,8 @@
                             <td>/v2.0_rc1/<span class="orcid-dis">[ORCID]</span>/work</td>
                             <td>New work, with unique identifier per the source.</td>
                             <td><a href="#REQUEST" onclick="sampleAddWork()">Generate</a></td>
+                            <td>External identifier required. External identifier must be unique per
+                            a activity and source.</td>
                           </tr>
                         </tbody>
                       </table>
@@ -137,7 +141,8 @@
                             <th>HTTP METHOD</th>
                             <th>PATH</th>
                             <th>BODY</th>
-                            <th>generate sample</th>
+                            <th>Generate Sample</th>
+                            <th>Notes</th>
                           </tr>
                         </thead>
                         <tbody>
@@ -147,6 +152,7 @@
                             <td>/v2.0_rc1/<span class="orcid-dis">[ORCID]</span>/work/<span class="put-code-dis">PUT_CODE</span></td>
                             <td></td>
                             <td><a href="#REQUEST" onclick="sampleReadWork()">Generate</a></td>
+                            <td></td>
                           </tr>
                         </tbody>
                         <tbody>
@@ -162,6 +168,7 @@
                                   Please READ a work first.
                                <% } %>
                             </td>
+                            <td>Only the source can update.</td>
                           </tr>
                         </tbody>
                         <tbody>
@@ -171,6 +178,7 @@
                             <td>/v2.0_rc1/<span class="orcid-dis">[ORCID]</span>/work/<span class="put-code-dis">PUT_CODE</span></td>
                             <td></td>
                             <td><a href="#REQUEST" onclick="sampleDelete()">Generate</a></td>
+                            <td>Only the source can delete.</td>
                           </tr>
                         </tbody>
                       </table>
