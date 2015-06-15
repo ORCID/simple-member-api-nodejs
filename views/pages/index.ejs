@@ -90,7 +90,7 @@
                       Bearer token for search must have /activities/update permission? Get one buy doing the client authorization <a href="https://simpleorcidauthnode-rcpetersorcid.rhcloud.com/" target="auth_app">code flow</a>.<br/>
                       <a href="https://simpleorcidauthnode-rcpetersorcid.rhcloud.com/" target="auth_app">code flow</a>.<br/>
                       <br />
-                      <label>ORCID: <input name="orcid" value="<%= orcid %>" /></label><br />
+                      <label>ORCID: <input name="orcid" value="<%= orcid %>" onkeyup="updateOrcidDis($(this).val())"/></label><br />
                       All activities API calls must include an ORCID in the path
 
                       <table class="table">
@@ -108,7 +108,7 @@
                           <tr>
                             <th scope="row">Read Activities Summary</th>
                             <td>GET</td>
-                            <td>/v2.0_rc1/[ORCID]/activities</td>
+                            <td>/v2.0_rc1/<span class="orcid-dis">[ORCID]</span>/activities</td>
                             <td></td>
                             <td><a href="#REQUEST" onclick="sampleReadActivities()">Generate</a></td>
                           </tr>
@@ -117,7 +117,7 @@
                           <tr>
                             <th scope="row">Add a Work</th>
                             <td>POST</td>
-                            <td>/v2.0_rc1/[ORCID]/work</td>
+                            <td>/v2.0_rc1/<span class="orcid-dis">[ORCID]</span>/work</td>
                             <td>New work, with unique identifier per the source.</td>
                             <td><a href="#REQUEST" onclick="sampleAddWork()">Generate</a></td>
                           </tr>
@@ -125,7 +125,7 @@
                       </table>
 
                       <h3>Required for activity READ, UPDATE and DELETE</h3>
-                      <label>Put Code</label>: <input name="putCode" value="<%= putCode %>" />
+                      <label>Put Code</label>: <input name="putCode" value="<%= putCode %>" onkeyup="updatePutCodeDis($(this).val())"/>
                       <table class="table">
                         <caption>Sample Work Activities Paths</caption>
                         <thead>
@@ -141,7 +141,7 @@
                           <tr>
                             <th scope="row">Read Work</th>
                             <td>GET</td>
-                            <td>/v2.0_rc1/[ORCID]/work/[PUT_CODE]</td>
+                            <td>/v2.0_rc1/<span class="orcid-dis">[ORCID]</span>/work/<span class="put-code-dis">PUT_CODE</span></td>
                             <td></td>
                             <td><a href="#REQUEST" onclick="sampleReadWork()">Generate</a></td>
                           </tr>
@@ -150,7 +150,7 @@
                           <tr>
                             <th scope="row">Update Work</th>
                             <td>PUT</td>
-                            <td>/v2.0_rc1/[ORCID]/work/[PUT-CODE]</td>
+                            <td>/v2.0_rc1/<span class="orcid-dis">[ORCID]</span>/work/<span class="put-code-dis">PUT_CODE</span></td>
                             <td></td>
                             <td>
                                <% if (results.indexOf('work put-code=') > -1) { %>
@@ -165,7 +165,7 @@
                           <tr>
                             <th scope="row">Delete Work</th>
                             <td>DELETE</td>
-                            <td>/v2.0_rc1/[ORCID]/work/[PUT-CODE]</td>
+                            <td>/v2.0_rc1/<span class="orcid-dis">[ORCID]</span>/work/<span class="put-code-dis">PUT_CODE</span></td>
                             <td></td>
                             <td><a href="#REQUEST" onclick="sampleDelete()">Generate</a></td>
                           </tr>
@@ -290,21 +290,33 @@
 
       function populateReqBody(val) {
        $('textarea[name=reqBody]').val(val);
-       }
+      }
+
+      function updateOrcidDis(val) {
+         $('.orcid-dis').each(function() {
+           $(this).html(val);
+          });
+      };
+
+      function updatePutCodeDis(val) {
+         $('.put-code-dis').each(function() {
+           $(this).html(val);
+          });
+      };
 
       function sampleSearch(sample){
         populatePath(sample);
         populateHttpMethod('get');
         populateReqBody('');
         populateAuthorization($('input[name=readPublicToken]').val());
-       };
+      };
 
       function sampleReadActivities(){
         populatePath('/v2.0_rc1/' + $('input[name=orcid]').val() + '/activities');
         populateHttpMethod('get');
         populateReqBody('');
         populateAuthorization($('input[name=updateActivitiesToken]').val());
-       };
+      };
 
       function sampleAddWork(){
         populatePath('/v2.0_rc1/' + $('input[name=orcid]').val() + '/work');
@@ -312,7 +324,7 @@
         var template = $('#add_work').html()
         populateReqBody(Mustache.render(template, {}));
         populateAuthorization($('input[name=updateActivitiesToken]').val());
-       };
+      };
 
       function sampleReadWork(){
         populatePath('/v2.0_rc1/' + $('input[name=orcid]').val() + '/work' + '/' + $('input[name=putCode]').val());
