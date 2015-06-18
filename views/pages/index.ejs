@@ -1,4 +1,4 @@
-<html>
+-<html>
   <head>
     <meta charset="utf-8">
       <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -31,18 +31,23 @@
                     <p>
                       Additional documentation at <a href="http://members.orcid.org/api/tutorial-searching-api-12-and-earlier" target="_blank">http://members.orcid.org/api/tutorial-searching-api-12-and-earlier</a> <br />
                       <h3>Requires</h3>
-                      <label>Bearer Token:</label> <input name="readPublicToken" value="<%=readPublicToken%>" /><br />
-                      Bearer token for search must have /read-public permission? Get one buy doing the client credentials<a href="https://simpleorcidauthnode-rcpetersorcid.rhcloud.com/" target="auth_app"> flow</a>.<br />
+                      <div class="control-group">
+                        <label>Bearer Token:</label>
+                        <input name="readPublicToken" class="form-control" value="<%=readPublicToken%>" />
+                      </div>
+                      <div class="margin-top">
+                        <p>Bearer token for search must have /read-public permission? Get one buy doing the client credentials <a href="https://simpleorcidauthnode-rcpetersorcid.rhcloud.com/" target="auth_app">flow</a>.</p>
+                      </div>
                     </p>
-                    <p>
-                      <table class="table">
-                        <caption>Sample Search Paths</caption>
+                    <h4>Sample Search Paths</h4>
+                    <div class="table-responsive">
+                      <table class="table table-bordered">
                         <thead>
                           <tr>
                             <th>Description</th>
                             <th>HTTP METHOD</th>
                             <th>PATH</th>
-                            <th>generate sample</th>
+                            <th>Generate sample</th>
                           </tr>
                         </thead>
                         <tbody>
@@ -72,7 +77,7 @@
                           </tr>
                         </tbody>
                       </table>
-                    </p>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -84,105 +89,119 @@
                 </div>
                 <div id="collapseTwo" class="panel-collapse collapse <%= accordState.indexOf('collapseTwo') > -1 ? 'in': '' %>" >
                   <div class="panel-body">
-                    <p>
-                      Additional documentation at: <a href="https://github.com/ORCID/ORCID-Source/blob/master/orcid-model/src/main/resources/record_2.0_rc1/README.MD" target="_blank">https://github.com/ORCID/ORCID-Source/blob/master/orcid-model/src/main/resources/record_2.0_rc1/README.MD</a><br />
+                    <div>
+                      <p>Additional documentation at: <a href="https://github.com/ORCID/ORCID-Source/blob/master/orcid-model/src/main/resources/record_2.0_rc1/README.MD" target="_blank">https://github.com/ORCID/ORCID-Source/blob/master/orcid-model/src/main/resources/record_2.0_rc1/README.MD</a></p>
                       <h3>Required</h3>
-                      <label>Bearer Token:</label> <input name="updateActivitiesToken" value="<%=updateActivitiesToken%>" /><br />
-                      Bearer token for search must have /activities/update permission? Get one buy doing the client authorization <a href="https://simpleorcidauthnode-rcpetersorcid.rhcloud.com/" target="auth_app">code flow</a>.<br/>
-                      <a href="https://simpleorcidauthnode-rcpetersorcid.rhcloud.com/" target="auth_app">code flow</a>.<br/>
-                      <br />
-                      <label>ORCID:</label> <input name="orcid" value="<%= orcid %>" onkeyup="updateOrcidDis()"
-                      onchange="updateOrcidDis()" /><br />
-                      All activities API calls must include an ORCID in the path
-
-                      <table class="table">
-                        <caption>Sample Work Activities Paths</caption>
-                        <thead>
-                          <tr>
-                            <th>Description</th>
-                            <th>HTTP METHOD</th>
-                            <th>PATH</th>
-                            <th>BODY</th>
-                            <th>Generate Sample</th>
-                            <th>Notes</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr>
-                            <th scope="row">Read Activities Summary</th>
-                            <td>GET</td>
-                            <td>/v2.0_rc1/<span class="orcid-dis">[ORCID]</span>/activities</td>
-                            <td></td>
-                            <td><a href="#REQUEST" onclick="sampleReadActivities()">Generate</a></td>
-                            <td></td>
-                          </tr>
-                        </tbody>
-                        <tbody>
-                          <tr>
-                            <th scope="row">Add a Work</th>
-                            <td>POST</td>
-                            <td>/v2.0_rc1/<span class="orcid-dis">[ORCID]</span>/work</td>
-                            <td>New work, with unique identifier per the source.</td>
-                            <td><a href="#REQUEST" onclick="sampleAddWork()">Generate</a></td>
-                            <td>External identifier required. External identifier must be unique per
-                            a activity and source.</td>
-                          </tr>
-                        </tbody>
-                      </table>
-
+                      <div class="form-group">
+                          <label>Bearer Token:</label>
+                          <input name="updateActivitiesToken" class="form-control" value="<%=updateActivitiesToken%>" />
+                      </div>
+                      <div class="margin-top">
+                        <p>Bearer token for search must have /activities/update permission? Get one buy doing the client authorization <a href="https://simpleorcidauthnode-rcpetersorcid.rhcloud.com/" target="auth_app">code flow</a>.</p>                        
+                      </div>                      
+                      <div class="control-group">
+                        <label>ORCID:</label>
+                        <input name="orcid" value="<%= orcid %>" class="form-control" onkeyup="updateOrcidDis()" onchange="updateOrcidDis()" />
+                      </div>
+                      <div class="margin-top">
+                          <p>All activities API calls must include an ORCID in the path</p>
+                      </div>
+                      <h4>Sample Work Activities Paths</h4>
+                      <div class="table-responsive">
+                          <table class="table table-bordered">
+                            <thead>
+                              <tr>
+                                <th>Description</th>
+                                <th>HTTP METHOD</th>
+                                <th>PATH</th>
+                                <th>BODY</th>
+                                <th>Generate Sample</th>
+                                <th>Notes</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr>
+                                <th scope="row">Read Activities Summary</th>
+                                <td>GET</td>
+                                <td>/v2.0_rc1/<span class="orcid-dis">[ORCID]</span>/activities</td>
+                                <td></td>
+                                <td><a href="#REQUEST" onclick="sampleReadActivities()">Generate</a></td>
+                                <td></td>
+                              </tr>
+                            </tbody>
+                            <tbody>
+                              <tr>
+                                <th scope="row">Add a Work</th>
+                                <td>POST</td>
+                                <td>/v2.0_rc1/<span class="orcid-dis">[ORCID]</span>/work</td>
+                                <td>New work, with unique identifier per the source.</td>
+                                <td><a href="#REQUEST" onclick="sampleAddWork()">Generate</a></td>
+                                <td>External identifier required. External identifier must be unique per
+                                a activity and source.</td>
+                              </tr>
+                            </tbody>
+                          </table>
+                      </div>
                       <h3>Required for activity READ, UPDATE and DELETE</h3>
-                      <label>putCode</label>: <input name="putCode" value="<%= putCode %>" onkeyup="updatePutCodeDis()" onchange="updatePutCodeDis()"/><br />
-                      <strong>What is a putCode?</strong> A Put Code is a numeric identifier used to uniquely identify an activity. For this example you can get a work putCode by running the Read Activities Summary above. The work-summary element will have an attribute called putCode. 
-                      <table class="table">
-                        <caption>Sample Work Activities Paths</caption>
-                        <thead>
-                          <tr>
-                            <th>Description</th>
-                            <th>HTTP METHOD</th>
-                            <th>PATH</th>
-                            <th>BODY</th>
-                            <th>Generate Sample</th>
-                            <th>Notes</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr>
-                            <th scope="row">Read Work</th>
-                            <td>GET</td>
-                            <td>/v2.0_rc1/<span class="orcid-dis">[ORCID]</span>/work/<span class="put-code-dis">PUT_CODE</span></td>
-                            <td></td>
-                            <td><a href="#REQUEST" onclick="sampleReadWork()">Generate</a></td>
-                            <td></td>
-                          </tr>
-                        </tbody>
-                        <tbody>
-                          <tr>
-                            <th scope="row">Update Work</th>
-                            <td>PUT</td>
-                            <td>/v2.0_rc1/<span class="orcid-dis">[ORCID]</span>/work/<span class="put-code-dis">PUT_CODE</span></td>
-                            <td>Existing work</td>
-                            <td>
-                               <% if (results.indexOf('work put-code=') > -1) { %>
-                                 <a href="#REQUEST" onclick="sampleUpdateWork()">Generate by copying last response.</a>
-                               <% } else { %>
-                                  Please READ a work first.
-                               <% } %>
-                            </td>
-                            <td>Only the source can update.</td>
-                          </tr>
-                        </tbody>
-                        <tbody>
-                          <tr>
-                            <th scope="row">Delete Work</th>
-                            <td>DELETE</td>
-                            <td>/v2.0_rc1/<span class="orcid-dis">[ORCID]</span>/work/<span class="put-code-dis">PUT_CODE</span></td>
-                            <td></td>
-                            <td><a href="#REQUEST" onclick="sampleDelete()">Generate</a></td>
-                            <td>Only the source can delete.</td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </p>
+                      <div class="control-group">
+                          <label>putCode</label>:
+                          <input name="putCode" class="form-control" value="<%= putCode %>" onkeyup="updatePutCodeDis()" onchange="updatePutCodeDis()"/>
+                      </div>
+                      <div class="margin-top">
+                          <p><strong>What is a putCode?</strong> A Put Code is a numeric identifier used to uniquely identify an activity. For this example you can get a work putCode by running the Read Activities Summary above. The work-summary element will have an attribute called putCode.</p>
+                      </div>
+                      <h4>Sample Work Activities Paths</h4>
+                      <div class="table-responsive">
+                          <table class="table table-bordered">
+                            <thead>
+                              <tr>
+                                <th>Description</th>
+                                <th>HTTP METHOD</th>
+                                <th>PATH</th>
+                                <th>BODY</th>
+                                <th>Generate Sample</th>
+                                <th>Notes</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr>
+                                <th scope="row">Read Work</th>
+                                <td>GET</td>
+                                <td>/v2.0_rc1/<span class="orcid-dis">[ORCID]</span>/work/<span class="put-code-dis">PUT_CODE</span></td>
+                                <td></td>
+                                <td><a href="#REQUEST" onclick="sampleReadWork()">Generate</a></td>
+                                <td></td>
+                              </tr>
+                            </tbody>
+                            <tbody>
+                              <tr>
+                                <th scope="row">Update Work</th>
+                                <td>PUT</td>
+                                <td>/v2.0_rc1/<span class="orcid-dis">[ORCID]</span>/work/<span class="put-code-dis">PUT_CODE</span></td>
+                                <td>Existing work</td>
+                                <td>
+                                   <% if (results.indexOf('work put-code=') > -1) { %>
+                                     <a href="#REQUEST" onclick="sampleUpdateWork()">Generate by copying last response.</a>
+                                   <% } else { %>
+                                      Please READ a work first.
+                                   <% } %>
+                                </td>
+                                <td>Only the source can update.</td>
+                              </tr>
+                            </tbody>
+                            <tbody>
+                              <tr>
+                                <th scope="row">Delete Work</th>
+                                <td>DELETE</td>
+                                <td>/v2.0_rc1/<span class="orcid-dis">[ORCID]</span>/work/<span class="put-code-dis">PUT_CODE</span></td>
+                                <td></td>
+                                <td><a href="#REQUEST" onclick="sampleDelete()">Generate</a></td>
+                                <td>Only the source can delete.</td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                    </div>
                   </div>
                 </div>
               </div>          
@@ -209,7 +228,9 @@
                 </blockquote>
                 <h3>HTTP METHOD</h3>
                 <blockquote>
-                  <label><input class="form-control" type="text" name="httpMethod" value="<%= httpMethod %>"></input></label>
+                  <div class="control-group">                  
+                      <input class="form-control" type="text" name="httpMethod" value="<%= httpMethod %>"></input>
+                  </div>
                 </blockquote>   
                 <h3>HTTP HEADERS</h3>
                 <blockquote>
@@ -251,7 +272,7 @@
                 <textarea class="form-control" name="resBody"><%= results %></textarea>
               </div>
               <div id="outofsync-dis" class="panel-body" style="display: none">
-                Out of sync, submit request to see response.
+                <p>Out of sync, submit request to see response.</p>
               </div>
             </div>
           </div>
